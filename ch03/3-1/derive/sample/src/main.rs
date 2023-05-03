@@ -2,6 +2,12 @@
 #[derive(Eq, PartialEq)]
 struct A(i32);
 
+impl std::fmt::Display for A {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "A({})", self.0)
+    }
+}
+
 // PartialOrd を実装するために PartialEq が必要
 #[derive(PartialEq, PartialOrd)]
 struct B(f32);
@@ -23,6 +29,12 @@ fn main() {
     // A は一致比較可能
     println!("{:?}", A(0) == A(1));
 
+    let a1 = A(1);
+    let a2 = A(2);
+    if a1 != a2 {
+        eprintln!("Error: {} is not equal to {}", a1, a2);
+    }
+
     // B は大小比較可能
     println!("{:?}", B(1.0) > B(0.0));
 
@@ -40,4 +52,9 @@ fn main() {
 
     // F はdefault可能
     let _f = F::default();
+
+    panic!("PANIC!!");
+
+    unreachable!("You cannot come here!!!!");
+    
 }
