@@ -20,5 +20,14 @@ fn main() {
     }
     for v in &v2{
         println!("v2:{}",v);
+        println!("v2:{}",&v);
     }
+
+    let y;
+
+    {
+        let x = 5;
+        y = x;
+    }
+    dbg!(y);
 }
