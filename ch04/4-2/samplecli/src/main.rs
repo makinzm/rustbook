@@ -18,9 +18,11 @@ impl RpnCalculator {
         let mut stack = Vec::new();
 
         while let Some(token) = tokens.pop() {
+            // 数字の場合はstack
             if let Ok(x) = token.parse::<i32>() {
                 stack.push(x);
             } else {
+                // 最後に追加されたものを引っ張る
                 let y = stack.pop().expect("invalid syntax");
                 let x = stack.pop().expect("invalid syntax");
 
@@ -87,5 +89,16 @@ fn run<R: BufRead>(reader: R, verbose: bool) {
         let line = line.unwrap();
         let answer = calc.eval(&line);
         println!("{}", answer);
+    }
+}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test(){
+        let calc = RpnCalculator::new(false);
+        assert_eq!(calc.eval("5 5 +"), 10);
     }
 }
